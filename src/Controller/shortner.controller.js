@@ -7,10 +7,12 @@ export default class UrlShortner {
     this.urlRepo = new UrlRepository();
   }
 
+  // homepage
   get(req, res) {
     res.render("shortner", { shortUrl: null });
   }
 
+  //function to handle adding new
   async postSubmit(req, res) {
     const url = req.body.url;
 
@@ -30,5 +32,14 @@ export default class UrlShortner {
     }
   }
 
-  redirectToOriginal(req, res) {}
+  async redirectToOriginal(req, res) {
+    const key = req.params.key;
+    try {
+      const originalLink = await this.urlRepo.getOriginalLink(key);
+      res.redirect(originalLink);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Something went wrong");
+    }
+  }
 }

@@ -25,7 +25,7 @@ export const getDB = () => {
 
 const createIndex = async (db) => {
   try {
-    await db.collection("URLs").createIndex({ key: "text" });
+    await db.collection("URLs").createIndex({ shortUrl: "text" });
     console.log("Index created..");
   } catch (err) {
     console.log(err);
