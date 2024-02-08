@@ -1,4 +1,11 @@
 <!-- url input form  -->
+<!-- alert -->
+<%if(locals.Error){%>
+<div class="alert alert-danger w-75 text-center mx-auto mt-2" role="alert">
+  <%= Error%>
+</div>
+<%}%>
+
 <form class="row g-3 my-5 mx-auto w-50" action="/submiturl" method="post">
   <div class="col-auto w-75 mx-auto">
     <input
@@ -22,7 +29,9 @@
     id="floatingTextarea2Disabled"
     style="height: 100px"
     disabled
-  ></textarea>
+  >
+<%= shortUrl %></textarea
+  >
   <label for="floatingTextarea2Disabled">Shortened URL</label>
 </div>
 

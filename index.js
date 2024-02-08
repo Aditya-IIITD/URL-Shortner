@@ -2,6 +2,7 @@ import express from "express";
 import UrlShortner from "./src/Controller/shortner.controller.js";
 import path from "path";
 import ejsLayouts from "express-ejs-layouts";
+import { connectToMongodb } from "./src/Config/mongodb.js";
 const app = express();
 
 app.set("view engine", "ejs");
@@ -12,10 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 
 const urlshortner = new UrlShortner();
 app.get("/", urlshortner.get);
-app.post("/submiturl", urlshortner.postSubmit);
+app.post("/submiturl", (req, res) => urlshortner.postSubmit(req, res));
 
 app.use(express.static("src/View"));
 
 app.listen(3000, () => {
   console.log("App is listening at 3000...");
+  connectToMongodb();
 });
