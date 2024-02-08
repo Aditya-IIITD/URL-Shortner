@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { getDB } from "../Config/mongodb.js";
 
 class UrlRepository {
@@ -23,6 +24,31 @@ class UrlRepository {
         .collection(this.collection)
         .findOne({ shortUrl: shortUrl });
       return result.originalUrl;
+    } catch (err) {
+      console.log(err, "something went wrong with DB");
+    }
+  }
+
+  async getUserUrls(userId) {
+    try {
+      const db = getDB();
+      const result = await db
+        .collection(this.collection)
+        .find({ userId: new ObjectId(userId) })
+        .toArray();
+      return result;
+    } catch (err) {
+      console.log(err, "something went wrong with DB");
+    }
+  }
+
+  async checkIfUrlExist(originalUrl, userId) {
+    try {
+      const db = getDB();
+      const result = await db
+        .collection(this.collection)
+        .findOne({ userId: new ObjectId(userId), originalUrl: originalUrl });
+      return result;
     } catch (err) {
       console.log(err, "something went wrong with DB");
     }

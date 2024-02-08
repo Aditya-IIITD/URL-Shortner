@@ -36,6 +36,16 @@
 </div>
 
 <!-- already shortened urls -->
-<ul class="list-group list-group-flush w-75 mx-auto">
-  <li class="list-group-item list-group-item-secondary">An item</li>
+<h1 class="display-6 text-center" style="font-size: 20px; font-weight: 400">
+  Recently Generated Short Links
+</h1>
+<ul class="list-group list-group-flush w-50 mx-auto">
+  <%if(links){%> <%links?.map((item)=>{%>
+  <li class="list-group-item list-group-item-secondary">
+    <p>Original Link : <%=item.originalUrl%></p>
+    <p>Short Link : <%=item.shortUrl%></p>
+  </li>
+  <%})%> <%}else{%>
+  <li class="list-group-item list-group-item-secondary">No links...</li>
+  <%}%>
 </ul>

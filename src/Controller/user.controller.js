@@ -17,6 +17,9 @@ class UserController {
     try {
       const result = await this.userRepository.findUser(email, password);
       if (result) {
+        if (!req.cookies.uid) {
+          res.cookie("uid", result._id.toString(), { maxAge: 60 * 1000 });
+        }
         req.session.userEmail = email;
         res.redirect("/");
       } else {

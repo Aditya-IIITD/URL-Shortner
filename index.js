@@ -29,8 +29,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const urlshortner = new UrlShortner();
 const usercontroller = new UserController();
-app.get("/", urlshortner.get);
-app.get("/short/:key", (req, res) => urlshortner.redirectToOriginal(req, res));
+app.get("/", (req, res) => urlshortner.get(req, res));
+app.get("/short/:key", auth, (req, res) =>
+  urlshortner.redirectToOriginal(req, res)
+);
 app.get("/Signin", usercontroller.getSignin);
 app.get("/Signup", usercontroller.getSignup);
 app.get("/Signout", usercontroller.signOut);
