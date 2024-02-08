@@ -1,6 +1,6 @@
 import generateRandomKey from "../Config/randomkey.js";
 import UrlModel from "../Model/url.model.js";
-import UrlRepository from "./url.repository.js";
+import UrlRepository from "../Repository/url.repository.js";
 
 export default class UrlShortner {
   constructor() {
@@ -9,7 +9,10 @@ export default class UrlShortner {
 
   // homepage
   get(req, res) {
-    res.render("shortner", { shortUrl: null });
+    res.render("shortner", {
+      shortUrl: null,
+      userEmail: req.session.userEmail,
+    });
   }
 
   //function to handle adding new
@@ -22,13 +25,20 @@ export default class UrlShortner {
       try {
         await this.urlRepo.add(newUrl);
         req.shortUrl = newUrl.shortUrl;
-        res.render("shortner", { shortUrl: newUrl.shortUrl });
+        res.render("shortner", {
+          shortUrl: newUrl.shortUrl,
+          userEmail: req.session.userEmail,
+        });
       } catch (err) {
         console.log(err);
         res.status(500).send("Something went wrong");
       }
     } else {
-      res.render("shortner", { Error: "Url is empty", shortUrl: null });
+      res.render("shortner", {
+        Error: "Url is empty",
+        shortUrl: null,
+        userEmail: req.session.userEmail,
+      });
     }
   }
 
