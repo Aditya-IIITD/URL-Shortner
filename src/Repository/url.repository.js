@@ -19,7 +19,7 @@ class UrlRepository {
   async getOriginalLink(key) {
     try {
       const db = getDB();
-      const shortUrl = "https://url-shortner-2hea.onrender.com/" + key;
+      const shortUrl = "https://url-shortner-2hea.onrender.com/bit/" + key;
       const result = await db
         .collection(this.collection)
         .findOne({ shortUrl: shortUrl });
@@ -84,7 +84,7 @@ class UrlRepository {
       const db = getDB();
       const result = await db.collection(this.collection).updateOne(
         {
-          shortUrl: "https://url-shortner-2hea.onrender.com/" + key,
+          shortUrl: "https://url-shortner-2hea.onrender.com/bit/" + key,
           userId: new ObjectId(userId),
         },
         { $inc: { visited: 1 } }
