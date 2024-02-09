@@ -26,6 +26,18 @@ class UserRepository {
       console.log(err, "Something went wrong with DB");
     }
   }
+
+  async findUserWithEmail(email) {
+    try {
+      const db = getDB();
+      const res = await db
+        .collection(this.collection)
+        .findOne({ email: email });
+      return res;
+    } catch (err) {
+      console.log(err, "Something went wrong with DB");
+    }
+  }
 }
 
 export default UserRepository;

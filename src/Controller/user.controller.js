@@ -1,5 +1,6 @@
 import UserModel from "../Model/user.model.js";
 import UserRepository from "../Repository/user.repository.js";
+import bcrypt from "bcrypt";
 
 class UserController {
   constructor() {
@@ -12,11 +13,14 @@ class UserController {
 
   async postSignin(req, res) {
     const { email, password } = req.body;
-
     //check if user exist
     try {
-      const result = await this.userRepository.findUser(email, password);
-      if (result) {
+      const result = await this.userRepository.findUserWithEmail(email);
+      //compare hashed password with input
+      const passMatched = result
+        ? await bcrypt.compare(req.body.password, result.password)
+        : false;
+      if (result && passMatched) {
         if (!req.cookies.uid) {
           res.cookie("uid", result._id.toString(), { maxAge: 60 * 1000 });
         }
@@ -39,10 +43,12 @@ class UserController {
 
   async postSignup(req, res) {
     const { name, email, password } = req.body;
-    const newUser = new UserModel(name, email, password);
+    //hashing password because it will be stored in DB
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const newUser = new UserModel(name, email, hashedPassword);
     try {
       //check if user already exists
-      const result = await this.userRepository.findUser(email, password);
+      const result = await this.userRepository.findUser(email, hashedPassword);
       if (result) {
         res.cookie("uid", result._id.toString(), { maxAge: 60 * 1000 });
         res.render("Signup", { Error: "User already exist, try to Login" });
