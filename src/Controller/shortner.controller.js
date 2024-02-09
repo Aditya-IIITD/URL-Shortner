@@ -65,6 +65,7 @@ export default class UrlShortner {
     const key = req.params.key;
     try {
       const originalLink = await this.urlRepo.getOriginalLink(key);
+      await this.urlRepo.increaseVisit(key, req.cookies.uid);
       res.redirect(originalLink);
     } catch (err) {
       console.log(err);

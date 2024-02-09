@@ -69,14 +69,28 @@ class UrlRepository {
   async update(id, userId, newUrl) {
     try {
       const db = getDB();
-      console.log(id, userId, newUrl);
       const result = await db
         .collection(this.collection)
         .updateOne(
           { userId: userId, _id: new ObjectId(id) },
-          { $set: { originalUrl: newUrl } }
+          { $set: { originalUrl: newUrl, visited: 0 } }
         );
       console.log(result);
+    } catch (err) {
+      console.log(err, "something went wrong with DB");
+    }
+  }
+
+  async increaseVisit(key, userId) {
+    try {
+      const db = getDB();
+      const result = await db.collection(this.collection).updateOne(
+        {
+          shortUrl: "http://localhost:3000/short/" + key,
+          userId: new ObjectId(userId),
+        },
+        { $inc: { visited: 1 } }
+      );
     } catch (err) {
       console.log(err, "something went wrong with DB");
     }

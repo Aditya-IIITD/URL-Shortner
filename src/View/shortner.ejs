@@ -40,14 +40,16 @@
   Recently Generated Short Links
 </h1>
 <ul class="list-group list-group-flush w-50 mx-auto">
-  <%if(links){%> <%links?.map((item)=>{%>
+  <%if(links?.length){%> <%links?.map((item)=>{%>
   <li class="list-group-item list-group-item-secondary">
     <div>
       <p>Original Link : <%=item.originalUrl%></p>
       <p>Short Link : <%=item.shortUrl%></p>
     </div>
     <div class="d-flex" style="justify-content: space-between">
-      <a class="btn btn-secondary" style="cursor: default">Visited: </a>
+      <a class="btn btn-secondary" style="cursor: default"
+        >Visited: <%= item.visited%></a
+      >
       <div class="d-flex gap-2">
         <!-- <form action="/updateUrl/<%=item._id%>" method="post"> -->
         <!-- <button class="btn btn-primary" data-bs-toggle="modal">Update</button> -->
@@ -60,7 +62,7 @@
           Update
         </button>
         <!-- </form> -->
-        <form action="/deleteUrl/<%=item._id%>" method="delete">
+        <form action="/deleteUrl/<%=item._id%>" method="post">
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
       </div>
@@ -122,6 +124,12 @@
     </div>
   </li>
   <%})%> <%}else{%>
-  <li class="list-group-item list-group-item-secondary">No links...</li>
+  <!-- <li class="list-group-item list-group-item-secondary">No links...</li> -->
+  <li class="list-group-item text-center mt-5">
+    <img
+      src="https://cdn-icons-png.flaticon.com/128/10363/10363577.png"
+      style="height: 80px"
+    />
+  </li>
   <%}%>
 </ul>

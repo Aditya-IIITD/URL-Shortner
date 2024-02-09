@@ -5,5 +5,6 @@ export default class UrlModel {
     this.originalUrl = url;
     this.shortUrl = "http://localhost:3000/short/" + key;
     this.userId = new ObjectId(userId);
+    this.visited = 0;
   }
 }
