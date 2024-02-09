@@ -79,13 +79,12 @@ class UrlRepository {
     }
   }
 
-  async increaseVisit(key, userId) {
+  async increaseVisit(key) {
     try {
       const db = getDB();
       const result = await db.collection(this.collection).updateOne(
         {
           shortUrl: "https://url-shortner-2hea.onrender.com/bit/" + key,
-          userId: new ObjectId(userId),
         },
         { $inc: { visited: 1 } }
       );
