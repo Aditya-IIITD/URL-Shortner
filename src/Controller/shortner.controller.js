@@ -64,8 +64,10 @@ export default class UrlShortner {
   async redirectToOriginal(req, res) {
     const key = req.params.key;
     try {
+      console.log("KEY: ",key);
       const originalLink = await this.urlRepo.getOriginalLink(key);
       await this.urlRepo.increaseVisit(key);
+      console.log("originalLink: ",originalLink);
       res.redirect(originalLink);
     } catch (err) {
       console.log(err);
