@@ -78,7 +78,13 @@ export default class UrlShortner {
     const userId = new ObjectId(req.cookies.uid);
     try {
       await this.urlRepo.delete(id, userId);
-      res.redirect("/");
+      // res.redirect("/");
+      const userData = await this.urlRepo.getUserUrls(req.cookies.uid);
+        res.render("shortner", {
+          shortUrl: null,
+          userEmail: req.session.userEmail,
+          links: userData,
+        });
     } catch (err) {
       console.log(err);
       res.status(500).send("Something went wrong");
