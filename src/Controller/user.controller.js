@@ -27,7 +27,7 @@ class UserController {
         req.session.userEmail = email;
         res.redirect("/");
       } else {
-        res.render("Signin", {
+        res.render("signin", {
           Error: "Invalid Credentials",
         });
       }
@@ -51,7 +51,7 @@ class UserController {
       const result = await this.userRepository.findUser(email, hashedPassword);
       if (result) {
         res.cookie("uid", result._id.toString(), { maxAge: 60 * 1000 });
-        res.render("Signup", { Error: "User already exist, try to Login" });
+        res.render("signup", { Error: "User already exist, try to Login" });
       } else {
         const userDoc = await this.userRepository.addUser(newUser);
         res.cookie("uid", userDoc.insertedId.toString(), { maxAge: 60 * 1000 });
