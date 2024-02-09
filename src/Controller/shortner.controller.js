@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import generateRandomKey from "../Config/randomkey.js";
 import UrlModel from "../Model/url.model.js";
 import UrlRepository from "../Repository/url.repository.js";
@@ -65,6 +66,42 @@ export default class UrlShortner {
     try {
       const originalLink = await this.urlRepo.getOriginalLink(key);
       res.redirect(originalLink);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Something went wrong");
+    }
+  }
+
+  async deleteUrl(req, res) {
+    const id = req.params.id;
+    const userId = new ObjectId(req.cookies.uid);
+    try {
+      console.log(id);
+      await this.urlRepo.delete(id, userId);
+      res.redirect("/");
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Something went wrong");
+    }
+  }
+
+  async updateUrl(req, res) {
+    const id = req.params.id;
+    const userId = new ObjectId(req.cookies.uid);
+    const newUrl = req.body.newUrl;
+    try {
+      if (newUrl) {
+        await this.urlRepo.update(id, userId, newUrl);
+        res.redirect("/");
+      } else {
+        const userData = await this.urlRepo.getUserUrls(req.cookies.uid);
+        res.render("shortner", {
+          Error: "New Url is invalid",
+          shortUrl: null,
+          userEmail: req.session.userEmail,
+          links: userData,
+        });
+      }
     } catch (err) {
       console.log(err);
       res.status(500).send("Something went wrong");

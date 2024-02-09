@@ -42,8 +42,84 @@
 <ul class="list-group list-group-flush w-50 mx-auto">
   <%if(links){%> <%links?.map((item)=>{%>
   <li class="list-group-item list-group-item-secondary">
-    <p>Original Link : <%=item.originalUrl%></p>
-    <p>Short Link : <%=item.shortUrl%></p>
+    <div>
+      <p>Original Link : <%=item.originalUrl%></p>
+      <p>Short Link : <%=item.shortUrl%></p>
+    </div>
+    <div class="d-flex" style="justify-content: space-between">
+      <a class="btn btn-secondary" style="cursor: default">Visited: </a>
+      <div class="d-flex gap-2">
+        <!-- <form action="/updateUrl/<%=item._id%>" method="post"> -->
+        <!-- <button class="btn btn-primary" data-bs-toggle="modal">Update</button> -->
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          Update
+        </button>
+        <!-- </form> -->
+        <form action="/deleteUrl/<%=item._id%>" method="delete">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Update Url
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form action="/updateUrl/<%=item._id%>" method="post">
+            <div class="modal-body">
+              <div class="input-group flex-nowrap">
+                <span class="input-group-text" id="addon-wrapping">URL</span>
+                <input
+                  type="url"
+                  class="form-control"
+                  placeholder="Username"
+                  aria-label="Username"
+                  aria-describedby="addon-wrapping"
+                  value="<%=item.originalUrl%>"
+                  name="newUrl"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </li>
   <%})%> <%}else{%>
   <li class="list-group-item list-group-item-secondary">No links...</li>

@@ -53,6 +53,34 @@ class UrlRepository {
       console.log(err, "something went wrong with DB");
     }
   }
+
+  async delete(id, userId) {
+    try {
+      const db = getDB();
+      const result = await db
+        .collection(this.collection)
+        .deleteOne({ userId: userId, _id: new ObjectId(id) });
+      console.log(result);
+    } catch (err) {
+      console.log(err, "something went wrong with DB");
+    }
+  }
+
+  async update(id, userId, newUrl) {
+    try {
+      const db = getDB();
+      console.log(id, userId, newUrl);
+      const result = await db
+        .collection(this.collection)
+        .updateOne(
+          { userId: userId, _id: new ObjectId(id) },
+          { $set: { originalUrl: newUrl } }
+        );
+      console.log(result);
+    } catch (err) {
+      console.log(err, "something went wrong with DB");
+    }
+  }
 }
 
 export default UrlRepository;

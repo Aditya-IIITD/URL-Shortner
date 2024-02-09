@@ -39,6 +39,9 @@ app.get("/Signout", usercontroller.signOut);
 app.post("/Submiturl", auth, (req, res) => urlshortner.postSubmit(req, res));
 app.post("/Signup", (req, res) => usercontroller.postSignup(req, res));
 app.post("/Signin", (req, res) => usercontroller.postSignin(req, res));
+app.delete("/deleteUrl/:id", (req, res) => urlshortner.deleteUrl(req, res));
+app.post("/updateUrl/:id", (req, res) => urlshortner.updateUrl(req, res));
+
 app.use(express.static("src/View"));
 
 app.listen(3000, () => {
