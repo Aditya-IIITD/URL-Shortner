@@ -5,7 +5,7 @@ import ejsLayouts from "express-ejs-layouts";
 import { connectToMongodb } from "./src/Config/mongodb.js";
 import cors from "cors";
 import UserController from "./src/Controller/user.controller.js";
-import auth from "./src/Middlewares/auth.middleware.js";
+import auth from "./src/Middlewares/Auth.middleware.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import validationMiddleware from "./src/Middlewares/validator.middleware.js";
