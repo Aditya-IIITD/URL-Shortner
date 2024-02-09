@@ -48,7 +48,7 @@ class UserController {
     const newUser = new UserModel(name, email, hashedPassword);
     try {
       //check if user already exists
-      const result = await this.userRepository.findUser(email, hashedPassword);
+      const result = await this.userRepository.findUserWithEmail(email);
       if (result) {
         res.cookie("uid", result._id.toString(), { maxAge: 60 * 1000 });
         res.render("signup", { Error: "User already exist, try to Login" });
