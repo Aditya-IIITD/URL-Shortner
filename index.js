@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 const urlshortner = new UrlShortner();
 const usercontroller = new UserController();
 app.get("/", (req, res) => urlshortner.get(req, res));
-app.get("/bit/:key", auth, (req, res) =>
+app.get("/bit/:key", (req, res) =>
   urlshortner.redirectToOriginal(req, res)
 );
 app.get("/Signin", usercontroller.getSignin);
