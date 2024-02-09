@@ -16,7 +16,7 @@ const validationMiddleware = async (req, res, next) => {
 
   //check for errors
   if (!validationErrors.isEmpty()) {
-    return res.render("Signup", {
+    return res.render("signup", {
       Error: validationErrors.array()[0].msg,
     });
   }
