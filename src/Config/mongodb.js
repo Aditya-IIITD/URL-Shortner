@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 
-const url = "mongodb://localhost:27017/URLshort";
+const url =
+  "mongodb+srv://AdityaJ:obZdbtD3FKjDUx2m@urlshortner.61emkqk.mongodb.net/urlshortner?retryWrites=true&w=majority";
 
 let client;
 export const connectToMongodb = () => {
