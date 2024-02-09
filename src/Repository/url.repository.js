@@ -60,7 +60,6 @@ class UrlRepository {
       const result = await db
         .collection(this.collection)
         .deleteOne({ userId: userId, _id: new ObjectId(id) });
-      console.log(result);
     } catch (err) {
       console.log(err, "something went wrong with DB");
     }
@@ -75,7 +74,6 @@ class UrlRepository {
           { userId: userId, _id: new ObjectId(id) },
           { $set: { originalUrl: newUrl, visited: 0 } }
         );
-      console.log(result);
     } catch (err) {
       console.log(err, "something went wrong with DB");
     }

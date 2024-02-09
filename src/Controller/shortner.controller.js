@@ -77,7 +77,6 @@ export default class UrlShortner {
     const id = req.params.id;
     const userId = new ObjectId(req.cookies.uid);
     try {
-      console.log(id);
       await this.urlRepo.delete(id, userId);
       res.redirect("/");
     } catch (err) {

@@ -8,6 +8,7 @@ import UserController from "./src/Controller/user.controller.js";
 import auth from "./src/Middlewares/auth.middleware.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
+import validationMiddleware from "./src/Middlewares/validator.middleware.js";
 
 const app = express();
 
@@ -37,7 +38,9 @@ app.get("/Signin", usercontroller.getSignin);
 app.get("/Signup", usercontroller.getSignup);
 app.get("/Signout", usercontroller.signOut);
 app.post("/Submiturl", auth, (req, res) => urlshortner.postSubmit(req, res));
-app.post("/Signup", (req, res) => usercontroller.postSignup(req, res));
+app.post("/Signup", validationMiddleware, (req, res) =>
+  usercontroller.postSignup(req, res)
+);
 app.post("/Signin", (req, res) => usercontroller.postSignin(req, res));
 app.post("/deleteUrl/:id", auth, (req, res) => urlshortner.deleteUrl(req, res));
 app.post("/updateUrl/:id", auth, (req, res) => urlshortner.updateUrl(req, res));
